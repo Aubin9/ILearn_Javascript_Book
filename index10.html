@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Canvas HTML5</title>
+  </head>
+  <body>
+    <!-- Try experimenting with geĴing elements by their IDs -->
+    <div class="eltId">
+      <div id="one">Hello World</div>
+      <script>
+        const myEle1 = document.getElementById("one");
+        console.log(myEle1);
+      </script>
+    </div>
+
+    <!-- Use JavaScript to select page elements via their tag name: -->
+    <div>Hello World 1</div>
+    <div>Hello World 2</div>
+    <div>Hello World 3</div>
+    <script>
+      const myEles2 = document.getElementsByTagName("div");
+      console.log(myEles2[1]);
+    </script>
+
+    <!-- Canvas HTML5: Select all matching page elements using the class name of the element. -->
+    <h1 class="ele">Hello World</h1>
+    <div class="ele">Hello World 1</div>
+    <div class="ele">Hello World 3</div>
+    <script>
+      const myEles3 = document.getElementsByClassName("ele");
+      console.log(myEles3[0]);
+    </script>
+
+    <!-- Canvas HTML5: Use querySelector() to enable single element selection -->
+    <h1 class="ele">Hello World</h1>
+    <div class="ele">Hello World 1</div>
+    <div class="ele">Hello World 3</div>
+    <p class="ele">Hello World 4</p>
+    <script>
+      const myEle4 = document.querySelector(".ele");
+      console.log(myEle4);
+    </script>
+
+    <!-- JS Tester: Use querySelectorAll() to select all matching elements in an HTML file -->
+    <div class="container">
+      <div class="myEle">One</div>
+      <div class="myEle">Two</div>
+      <div class="myEle">Three</div>
+      <div class="myEle">Four</div>
+      <div class="myEle">Five</div>
+    </div>
+    <script>
+      const eles = document.querySelectorAll(".myEle");
+      console.log(eles);
+      eles.forEach((el) => {
+        console.log(el);
+      });
+    </script>
+
+    <!-- JS Tester -->
+    <div>
+      <button onclick="message(this)">Button 1</button>
+      <button onclick="message(this)">Button 2</button>
+    </div>
+    <div id="one">Don't click here!</div>
+    <script>
+      function message(el) {
+        console.dir(el.textContent);
+        alert("oh! buddy.");
+      }
+      document.getElementById("one").onclick = function () {
+        alert("Auch! Stop that!");
+      };
+    </script>
+
+    <!-- Text appear and disapear when a button is clicked -->
+    <script>
+      function toggleDisplay() {
+        let p = document.getElementById("magic");
+        if (p.style.display === "none") {
+          p.style.display = "block";
+        } else {
+          p.style.display = "none";
+        }
+      }
+    </script>
+    <p id="magic">I might disappear and appear.</p>
+    <button onclick="toggleDisplay()">Magic!</button>
+
+    <!-- Adding a class name -->
+    <script>
+      function disappear() {
+        document.getElementById("shape").classList.add("hide");
+      }
+    </script>
+    <style>
+      .hide {
+        display: none;
+      }
+      .square {
+        height: 100px;
+        width: 100px;
+        background-color: yellow;
+      }
+      .square.blue {
+        background-color: blue;
+      }
+    </style>
+    <div id="shape" class="square blue"></div>
+    <button onclick="disappear()">Disappear!</button>
+
+    <!-- Removing classes from elements -->
+    <script>
+      function change() {
+        document.getElementById("shape").classList.remove("blue");
+      }
+    </script>
+    <button onclick="change()">Change !</button>
+
+    <!-- Toggling classes -->
+    <script>
+      function changeVisibility() {
+        document.getElementById("shape").classList.toggle("hide");
+      }
+    </script>
+    <button onclick="changeVisibility()">Toggle !</button>
+
+    <!-- Manipulating attributes -->
+    <script>
+      function changeAttr() {
+        let el = document.getElementById("shape1");
+        el.setAttribute(
+          "style",
+          "background-color:red;border:1px solid black;"
+        );
+        el.setAttribute("id", "new");
+        el.setAttribute("class", "circle");
+      }
+    </script>
+    <style>
+      #new {
+        height: 100px;
+        width: 100px;
+        background-color: yellow;
+      }
+      .square1 {
+        height: 100px;
+        width: 100px;
+        background-color: yellow;
+      }
+      .circle {
+        border-radius: 50%;
+      }
+    </style>
+    <div id="shape1" class="square1"></div>
+    <button onclick="changeAttr()">Change attributes...</button>
+
+    <h1>Practical exercise</h1>
+    <!-- Practice exercise 10.1: Creating custom attributes -->
+    <!-- 
+  using an array of names, the following
+  code will update the element's HTML, adding HTML code using the
+  data from the array. The items within the array will be output to the
+  page as HTML code. The user will be able to click the page elements
+  and they will display the page element aĴribute values.
+
+  1. Create an array of names. You can add as many as you want—
+  all the string values will be output onto the page within a table.
+  2. Select the page elements as JavaScript objects.
+  3. Add a function and also invoke that function within the
+  JavaScript code. The function can be called build() as it will be
+  building the page content. Within the build function, you will
+  be seĴing up the HTML in a table.
+  4. Create a table named html , and within the tags, loop through
+  the contents of the array and output the results into the html
+  table.
+  5. Add a class called box to one of the cells that has the index
+  value of the item from the array, adding the same class to the
+  elements for each additional row.
+  6. As you create the HTML for the elements within the tr
+  element, create an aĴribute called data-row in the main row
+  element that includes the index value of the item from the array.
+  In addition, add another aĴribute within the element called
+  data-name that will contain the text output.
+  7. Within the aĴribute of the same tr element, also add onclick to
+  invoke a function named getData passing the current element
+  object as this into the function parameter.
+  8. Add the table of HTML code to the page.
+  9. Create a function named getData that will be invoked once the
+  HTML tr elements are clicked. Once the tr element is clicked,
+  use getAttribute to get the aĴribute values of the row value and
+  the contents of the text output and store them in different
+  variables.
+  10. Using the values in the aĴributes stored in the preceding step,
+  output the values into the message element on the page.
+  11. Once the user clicks the element on the page, it will display the
+  details coming from the element aĴributes within the element
+  with the id of message .
+ -->
+    <div id="message"></div>
+    <div id="output"></div>
+    <script>
+      const elt = document.querySelector("#message");
+      let names = [
+        "Aubin",
+        "Laurence",
+        "Mike",
+        "John",
+        "Larry",
+        "Kim",
+        "Joanne",
+        "Lisa",
+        "Janet",
+        "Jane",
+      ];
+
+      let build = () => {
+        let html = "<h1>My Friends Table</h1><table>";
+        names.forEach((item, index) => {
+          html += `<tr class="box" data-row="${
+            index + 1
+          }" data-name="${item}" onclick="getData(this)">
+              <td>${item}</td>
+              <td>${index + 1}</td>
+            </tr>`;
+        });
+        html += `</table>`;
+        document.getElementById("output").innerHTML = html;
+      };
+
+      function getData(elt) {
+        let temp = elt.getAttribute("data-row");
+        let tempName = elt.getAttribute("data-name");
+        message.innerHTML = `${tempName} is row #${temp}`;
+      }
+      build();
+    </script>
+
+    <!-- Event listeners on elements -->
+    <!-- 
+      Steps in JavaScript:
+      1. Select the element you want to add an event to
+      2. Use the addEventListener("event", function) syntax to add the
+      event
+     -->
+    <!-- window.onload = function() {
+        // whatever needs to happen after loading
+        // for example adding event listeners to elements
+      } -->
+    <script>
+      window.onload = function () {
+        document
+          .getElementById("square")
+          .addEventListener("click", changeColor);
+      };
+      function changeColor() {
+        let red = Math.floor(Math.random() * 256);
+        let green = Math.floor(Math.random() * 256);
+        let blue = Math.floor(Math.random() * 256);
+        this.style.backgroundColor = `rgb(${red}, ${green}, ${blue})`;
+      }
+    </script>
+    <div
+      id="square"
+      style="width: 100px; height: 100px; background-color: gray"
+    >
+      click into this shape
+    </div>
+    <!-- click, focus ,blur , focusin , focusout , mouseout , mouseover , keydown , keypress , and keyup  -->
+    <!-- Practice exercise 10.2 -->
+    <h2>Practice exercise 10.2</h2>
+    <div>
+      <button>Button 1</button>
+      <button>Button 2</button>
+      <button>Button 3</button>
+    </div>
+    <script>
+      const btns = document.querySelectorAll("button");
+      btns.forEach((btn) => {
+        function output() {
+          alert(this.textContent);
+        }
+        btn.addEventListener("click", output);
+      });
+    </script>
+
+    <script>
+      function addRandomNumber() {
+        let el = document.createElement("p");
+        el.innerText = Math.floor(Math.random() * 100);
+        document.body.appendChild(el);
+      }
+    </script>
+    <button onclick="addRandomNumber()">Add a number</button>
+
+    <div class="body">
+      <h2>Practice exercise 10.3: shopping list</h2>
+      <div id="message">Complete JavaScript Course</div>
+      <div>
+        <input type="text" id="addItem" />
+        <input type="button" id="addNew" value="Add to List" />
+      </div>
+      <div id="output1">
+        <h1>Shopping List</h1>
+        <ol id="sList"></ol>
+      </div>
+    </div>
+    <script>
+      document.getElementById("addNew").onclick = function () {
+        addOne();
+      };
+      function addOne() {
+        var a = document.getElementById("addItem").value;
+        var li = document.createElement("li");
+        function build() {
+          let html = "<h1>My Friends Table</h1><table>";
+          myArray.forEach((item, index) => {
+            html += `<tr class="box" data-row="${index + 1}"
+            data-name="${item}" onclick="getData(this)">
+            <td>${item}</td>`;
+            html += `<td >${index + 1}</td></tr>`;
+          });
+          html += "</table>";
+          document.getElementById("output1").innerHTML = html;
+        }
+        function getData(el) {
+          let temp = el.getAttribute("data-row");
+          let tempName = el.getAttribute("data-name");
+          message.innerHTML = `${tempName} is in row #${temp}`;
+        }
+        li.appendChild(document.createTextNode(a));
+        document.getElementById("sList").appendChild(li);
+      }
+    </script>
+
+    <h1>CHAPTER PROJECTS</h1>
+    <h2>Collapsible accordion component</h2>
+    <style>
+      .active {
+        display: block !important;
+      }
+      .myText {
+        display: none;
+      }
+      .title {
+        font-size: 1.5em;
+        background-color: #ddd;
+      }
+    </style>
+    <div class="container">
+      <div class="title">Title #1</div>
+      <div class="myText">
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Numquam cum ad
+        mollitia aliquid velit debitis quidem officia enim porro saepe placeat
+        veritatis eius vitae odio quis, quas rerum dolorem quo illum atque
+        perspiciatis. Exercitationem, fugit. Repellendus cum doloribus molestiae
+        assumenda necessitatibus odit. Aliquam ratione ipsa assumenda veritatis.
+        At aliquam quisquam, molestias deleniti doloribus praesentium illo
+        facere temporibus eaque deserunt similique quis ipsam optio debitis ea
+        quia necessitatibus impedit nobis alias. Ipsam esse repellat fuga
+        praesentium sapiente. Rerum esse placeat sit quos. Cupiditate eligendi
+        repellendus et odio quasi animi, voluptatibus, nesciunt reprehenderit at
+        voluptates impedit veritatis exercitationem officia laborum voluptatum
+        dolorem?
+      </div>
+      <div class="title">Title #2</div>
+      <div class="myText">
+        Just some text #2 Lorem, ipsum dolor sit amet consectetur adipisicing
+        elit. Unde, voluptatum.
+      </div>
+      <div class="title">Title #3</div>
+      <div class="myText">
+        Just some text #3 Lorem ipsum dolor sit amet, consectetur adipisicing
+        elit. Blanditiis a cum necessitatibus sapiente quis error? Magnam,
+        expedita nisi itaque quod, sequi modi, praesentium animi facilis
+        repudiandae vel dolor ipsum fugiat.
+      </div>
+    </div>
+    <script>
+      const menus = document.querySelectorAll(".title");
+      const openText = document.querySelectorAll(".myText");
+      menus.forEach((el) => {
+        el.addEventListener("click", (e) => {
+          console.log(el.nextElementSibling);
+          remover();
+          el.nextElementSibling.classList.toggle("active");
+        });
+      });
+      function remover() {
+        openText.forEach((ele) => {
+          ele.classList.remove("active");
+        });
+      }
+    </script>
+
+    <h2>Interactive voting system</h2>
+    <div id="msg">Click on a name bellow to vote a person</div>
+    <div>
+      <input type="text" id="addFriend" />
+      <input type="button" id="addNew1" value="Add Friend" />
+    </div>
+    <table id="output2"></table>
+    <script>
+      window.onload = buildd;
+      const myArr = ["Laurence", "Mike", "John", "Larry"];
+      const msg = document.getElementById("msg");
+      const addNew = document.getElementById("addNew1");
+      const newInput = document.getElementById("addFriend");
+      const output2 = document.getElementById("output2");
+      addNew.onclick = function () {
+        const newFriend = newInput.value;
+        adder(newFriend, myArr.length, 0);
+        myArr.push(newFriend);
+      };
+      function buildd() {
+        myArr.forEach((item, index) => {
+          adder(item, index, 0);
+        });
+      }
+      function adder(name, index, counter) {
+        const tr = document.createElement("tr");
+        const td1 = document.createElement("td");
+        td1.classList.add("box");
+        td1.textContent = index + 1;
+        const td2 = document.createElement("td");
+        td2.textContent = name;
+        const td3 = document.createElement("td");
+        td3.textContent = counter;
+        tr.append(td1);
+        tr.append(td2);
+        tr.append(td3);
+        tr.onclick = function () {
+          console.log(tr.lastChild);
+          let val = Number(tr.lastChild.textContent);
+          val++;
+          tr.lastChild.textContent = val;
+        };
+        output2.appendChild(tr);
+      }
+    </script>
+
+    <h2>Hangman game</h2>
+    <!-- CSS -->
+    <style>
+      .gameArea {
+        text-align: center;
+        font-size: 2em;
+        /* width: fit-content;
+        margin: auto; */
+      }
+      .box0,
+      .boxD {
+        display: inline-block;
+        padding: 5px;
+      }
+      .boxE {
+        display: inline-block;
+        width: 40px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 1.5em;
+      }
+    </style>
+    <!-- HTML -->
+    <div class="gameArea">
+      <div class="score"></div>
+      <div class="puzzle"></div>
+      <div class="letters"></div>
+      <button class="button">Start Game</button>
+    </div>
+    <script>
+      const game = {
+        cur: "",
+        solution: "",
+        puzz: [],
+        total: 0,
+      };
+      const myWords = ["learn Javascript", "learn html", "learn css"];
+      const score = document.querySelector(".score");
+      const puzzle = document.querySelector(".puzzle");
+      const letters = document.querySelector(".letters");
+      const btn0 = document.querySelector(".button");
+      btn0.addEventListener("click", startGame);
+      function startGame() {
+        if (myWords.length > 0) {
+          if (myWords.length > 0) {
+            btn0.style.display = "none";
+            game.puzz = [];
+            game.total = 0;
+            game.cur = myWords.shift();
+            game.solution = game.cur.split("");
+            builder();
+          } else {
+            score.textContent = "No More Words.";
+          }
+        }
+      }
+      function createElements(elType, parentEle, output, cla) {
+        const temp = document.createElement(elType);
+        temp.classList.add("boxE");
+        parentEle.append(temp);
+        temp.textContent = output;
+        return temp;
+      }
+      function updateScore() {
+        score.textContent = `Total Letters Left : ${game.total}`;
+        if (game.total <= 0) {
+          alert("game over");
+          score.textContent = "Game Over";
+          btn0.style.display = "block";
+        }
+      }
+      function builder() {
+        letters.innerHTML = "";
+        puzzle.innerHTML = "";
+        game.solution.forEach((lett) => {
+          let div = createElements("div", puzzle, "-", "boxE");
+          if (lett == " ") {
+            div.style.borderColor = "white";
+            div.textContent = " ";
+          } else {
+            game.total++;
+          }
+          game.puzz.push(div);
+          updateScore();
+        });
+        for (let i = 0; i < 26; i++) {
+          let temp = String.fromCharCode(65 + i);
+          let div = createElements("div", letters, temp, "box0");
+          let checker = function (e) {
+            div.style.backgroundColor = "#ddd";
+            div.classList.remove("box0");
+            div.classList.add("boxD");
+            div.removeEventListener("click", checker);
+            checkLetter(temp);
+          };
+          div.addEventListener("click", checker);
+        }
+      }
+      function checkLetter(letter) {
+        console.log(letter);
+        game.solution.forEach((ele, index) => {
+          if (ele.toUpperCase() == letter) {
+            game.puzz[index].textContent = letter;
+            game.total--;
+            updateScore();
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
