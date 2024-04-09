@@ -147,4 +147,16 @@ results to the console.
 -onclick(); onchange(); onmousehover(); focus , blur , focusin , focusout , mouseout , mouseover , keydown , keypress , and keyup
 -Creating new elements
 
-## 11. Interactive Content and Event Listeners
+## 11. Interactive Content and Event Listeners (index11.html)
+
+-Interactive content. e.g.: on the web, create postcards, play a game, etc.
+-Specifying events (3 ways: 1 in HTML and 2 in JS): click(onclick) - Dark Mode
+-The 'onload' event handler
+-The mouse event handler
+-The event target property
+-DOM event flow
+-'onchange' and 'onblur'
+-The key event handler
+-Drag and drop elements
+-Form submission: <form action="anotherpage.html" method="get" onsubmit="doStuff()">
+-Animating elements

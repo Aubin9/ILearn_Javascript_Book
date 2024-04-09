@@ -7,5 +7,656 @@
     <meta name="description" content="" />
     <title>Document</title>
   </head>
-  <body></body>
+  <body>
+    <!-- specifying with HTML -->
+    <h1>specifying with HTML</h1>
+    <p id="unique" onclick="magic()">Click here for magic!</p>
+    <p id="unique2">Click here for magic!</p>
+    <!-- Specifying with JavaScript 1-->
+    <h1>Specifying with JavaScript 1</h1>
+    <script>
+      document.getElementById("unique2").onclick = function () {
+        magic();
+      };
+      let magic = () => {
+        alert("hi");
+      };
+    </script>
+    <!--with HTML, we can only gives the onclick event, but with JS, we can also associate: keyup , keydown , or mouseover -->
+    <h3>
+      Practice exercise 11.1: Personalize your web pages - dark mode theme
+    </h3>
+    <div id="theme" style="cursor: pointer">click here to change the theme</div>
+
+    <script>
+      let darkMode = false;
+      //   window.onclick = () => {
+      document.getElementById("theme").onclick = () => {
+        console.log(darkMode);
+        if (!darkMode) {
+          document.body.style.backgroundColor = "black";
+          document.body.style.color = "white";
+          darkMode = true;
+        } else {
+          document.body.style.backgroundColor = "white";
+          document.body.style.color = "black";
+          darkMode = false;
+        }
+      };
+    </script>
+    <!-- Specifying with JavaScript 2: event Listeners-->
+    <h1>Specifying with JavaScript 2: event Listeners</h1>
+    <!-- these are events prefixed with 'on' e.g.: onclick , onload , onfocus , onblur , onchange, etc. -->
+    <h3>Practice exercise 11.2:</h3>
+    <div>click on a color bellow</div>
+    <div class="div">red</div>
+    <div class="div">blue</div>
+    <div class="div">green</div>
+    <div class="div">yellow</div>
+    <script>
+      const divs = document.querySelectorAll(".div");
+      divs.forEach((el) => {
+        el.addEventListener("click", () => {
+          document.body.style.backgroundColor = el.textContent;
+        });
+      });
+    </script>
+
+    <!-- The 'onload' Listener -->
+    <h1>The 'onload' Listener</h1>
+    <script>
+      window.onload = function () {
+        // whatever needs to happen after the page loads goes here
+        alert("WELCOME");
+      };
+      //   document.addEventListener("DOMContentLoaded", (e) => {
+      //     alert(e);
+      //   });
+    </script>
+    <h3>
+      Practice exercise 11.3: <small>uncomment it to see the result</small>
+    </h3>
+    <!-- <script>
+      document.addEventListener("DOMContentLoaded", (e) => {
+        message("Document ready", e);
+      });
+      window.onload = (e) => {
+        message("Window ready", e);
+      };
+      function message(val, event) {
+        alert(event);
+        alert(val);
+      }
+    </script> -->
+
+    <!-- MOUSE EVENT HANDLERS -->
+    <h1>MOUSE EVENT HANDLERS</h1>
+    <h3>Practice exercise 11.4:</h3>
+    <div>
+      Our aim is to change the background color of the element on the page as
+      the various mouse events occur
+    </div>
+    <div class="output"></div>
+    <script>
+      const output = document.querySelector(".output");
+      output.textContent = "hello world";
+      output.style.height = "200px";
+      output.style.width = "400px";
+      output.style.backgroundColor = "red";
+      output.addEventListener("mousedown", function (e) {
+        message("green", e);
+      });
+      output.addEventListener("mouseover", function (e) {
+        message("red", e);
+      });
+      output.addEventListener("mouseout", function (e) {
+        message("yellow", e);
+      });
+      output.addEventListener("mouseup", function (e) {
+        message("blue", e);
+      });
+      output.addEventListener("dblclick", function (e) {
+        message("tomato", e);
+      });
+      function message(elColor, event) {
+        console.log(event.type);
+        output.style.backgroundColor = elColor;
+      }
+    </script>
+    <!-- The event target property -->
+    <h1>The event target property</h1>
+    <div class="outp"></div>
+    <input type="text" name="message" placeholder="Your Message" />
+    <button class="btn1">Button 1</button>
+    <button class="btn2">Button 2</button>
+    <div><button class="btn3">Log</button></div>
+    <script>
+      const myInput = document.querySelector("input[name='message']");
+      const outp = document.querySelector(".outp");
+      const btn1 = document.querySelector(".btn1");
+      const btn2 = document.querySelector(".btn2");
+      const btn3 = document.querySelector(".btn3");
+      const log = [];
+      btn1.addEventListener("click", tracker);
+      btn2.addEventListener("click", tracker);
+      btn3.addEventListener("click", (e) => {
+        console.log(log);
+      });
+      function tracker(e) {
+        outp.textContent = myInput.value;
+        const ev = e.target;
+        console.dir(ev);
+        const temp = {
+          message: myInput.value,
+          type: ev.type,
+          class: ev.className,
+          tag: ev.tagName,
+        };
+        log.push(temp);
+        myInput.value = "";
+      }
+    </script>
+
+    <!-- DOM event flow -->
+    <h1>DOM event flow</h1>
+    <h3>Practice exercise 11.6:</h3>
+    <style>
+      .box {
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+      }
+    </style>
+    <div class="container">
+      <div class="box" id="box0">Box #1</div>
+      <div class="box" id="box1">Box #2</div>
+      <div class="box" id="box2">Box #3</div>
+      <div class="box" id="box3">Box #4</div>
+    </div>
+    <script>
+      const main = document.querySelector(".container");
+      const boxes = document.querySelectorAll(".box");
+      main.addEventListener(
+        "click",
+        (e) => {
+          console.log("4");
+        },
+        false
+      );
+      main.addEventListener(
+        "click",
+        (e) => {
+          console.log("1");
+        },
+        true
+      );
+      boxes.forEach((ele) => {
+        ele.addEventListener(
+          "click",
+          (e) => {
+            console.log("3");
+            console.log(e.target.textContent);
+          },
+          false
+        );
+        ele.addEventListener(
+          "click",
+          (e) => {
+            console.log("2");
+            console.log(e.target.textContent);
+          },
+          true
+        );
+      });
+    </script>
+
+    <!-- Onchange and onblur -->
+    <h1>Onchange and onblur</h1>
+    <!-- onblur -> out of focus. onchange -> element changes-->
+    <h3>Practice exercise 11.7: onchange and and onblur</h3>
+    <div class="output1"></div>
+    <input type="text" placeholder="First Name" name="first" /><br />
+    <input type="text" placeholder="Last Name" name="last" /><br />
+    <script>
+      const output1 = document.querySelector(".output1");
+      const in1 = document.querySelector("input[name='first']");
+      const in2 = document.querySelector("input[name='last']");
+      in1.addEventListener("change", (e) => {
+        console.log("change");
+        updater(in1.value);
+      });
+      in1.addEventListener("blur", (e) => {
+        console.log("blur");
+      });
+      in1.addEventListener("focus", (e) => {
+        console.log("focus");
+      });
+      in2.addEventListener("change", (e) => {
+        console.log("change");
+        updater(in2.value);
+      });
+      in2.addEventListener("blur", (e) => {
+        console.log("blur");
+      });
+      in2.addEventListener("focus", (e) => {
+        console.log("focus");
+      });
+      function updater(str) {
+        output1.textContent = str;
+      }
+    </script>
+
+    <!-- Key event handler -->
+    <h1>Key event handler</h1>
+    <div id="wrapper">JavaScript is fun!</div>
+    <input type="text" name="myNum1" onkeypress="return numCheck()" />
+    <input type="text" name="myNum2" onkeypress="return numCheck2()" />
+    <script>
+      function numCheck() {
+        message1(!isNaN(event.key));
+        return !isNaN(event.key);
+      }
+      function numCheck2() {
+        message1(isNaN(event.key));
+        return isNaN(event.key);
+      }
+      function message1(m) {
+        document.getElementById("wrapper").innerHTML = m;
+      }
+    </script>
+
+    <h3>Practice exercise 11.8: capture what you type on the screen</h3>
+    <div class="output3"></div>
+    <input class="input3" type="text" name="myNum1" />
+    <input class="input3" type="text" name="myNum2" />
+    <script>
+      const eles = document.querySelectorAll("input[class='input3']");
+      const output3 = document.querySelector(".output3");
+      eles.forEach((el) => {
+        el.addEventListener("keydown", (e) => {
+          if (!isNaN(e.key)) {
+            output3.textContent += e.key;
+          }
+        });
+        el.addEventListener("keyup", (e) => {
+          console.log(e.key);
+        });
+        el.addEventListener("paste", (e) => {
+          console.log("pasted");
+        });
+      });
+    </script>
+
+    <!-- Drag and drop elements -->
+    <h1>Drag and drop elements</h1>
+    <style>
+      .box4 {
+        height: 200px;
+        width: 200px;
+        padding: 20px;
+        margin: 0 50px;
+        display: inline-block;
+        border: 1px solid black;
+      }
+      #dragme {
+        background-color: red;
+      }
+    </style>
+    <div class="box4" ondrop="dDrop()" ondragover="nDrop()">
+      1
+      <div id="dragme" ondragstart="dStart()" draggable="true">
+        Drag Me Please!
+      </div>
+    </div>
+    <div class="box4" ondrop="dDrop()" ondragover="nDrop()">2</div>
+    <script>
+      let holderItem;
+      function dStart() {
+        holderItem = event.target;
+      }
+      function nDrop() {
+        event.preventDefault();
+      }
+      function dDrop() {
+        event.preventDefault();
+        if (event.target.className == "box4") {
+          event.target.appendChild(holderItem);
+        }
+      }
+    </script>
+
+    <h3>Practice exercise 11.9: "I AM NOT A ROBOT" checks</h3>
+    <style>
+      .box5 {
+        width: 100px;
+        height: 100px;
+        border: 1px solid black;
+        background-color: white;
+      }
+      .red {
+        background-color: red;
+      }
+    </style>
+    <div class="box5">
+      1
+      <div id="dragme1" draggable="true">Drag Me Please!</div>
+    </div>
+    <div class="box5">2</div>
+    <script>
+      const dragme1 = document.querySelector("#dragme1");
+      dragme1.addEventListener("dragstart", (e) => {
+        dragme1.style.opacity = 0.5;
+      });
+      dragme1.addEventListener("dragend", (e) => {
+        dragme1.style.opacity = "";
+      });
+      const bxs = document.querySelectorAll(".box5");
+      bxs.forEach((box5) => {
+        box5.addEventListener("dragenter", (e) => {
+          e.target.classList.add("red");
+        });
+        box5.addEventListener("dragover", (e) => {
+          e.preventDefault();
+        });
+        box5.addEventListener("dragleave", (e) => {
+          //console.log("leave");
+          e.target.classList.remove("red");
+        });
+        box5.addEventListener("drop", (e) => {
+          e.preventDefault();
+          console.log("dropped");
+          e.target.appendChild(dragme1);
+        });
+      });
+      function dragStart(e) {
+        console.log("Started");
+      }
+    </script>
+
+    <h1>Form submission</h1>
+    <!-- onsubmit attribute -->
+    <strong>Practice exercise 11.10: creating a form validator</strong>
+    <form action="index.html" onsubmit="" method="GET">
+      <div>
+        <input
+          type="text"
+          name="first"
+          id="first_name"
+          placeholder="First Name"
+        />
+      </div>
+      <input type="text" name="last" id="last_name" placeholder="Last Name" />
+      <div>
+        <input type="number" name="age" id="age" placeholder="your age" />
+      </div>
+      <div><input type="submit" value="Send" /></div>
+    </form>
+    <script>
+      const form = document.querySelector("form");
+      const email = document.querySelector("#email");
+      form.addEventListener("submit", (e) => {
+        let error = false;
+        if (checker(form.first.value)) {
+          console.log("First Name needed");
+          error = true;
+        }
+        if (checker(form.last.value)) {
+          console.log("Last Name needed");
+          error = true;
+        }
+        if (form.age.value < 10) {
+          console.log("You must be 19 or over");
+          error = true;
+        }
+        if (error) {
+          e.preventDefault();
+          console.log("please review the form");
+        }
+      });
+      function checker(val) {
+        console.log(val.length);
+        if (val.length < 3) {
+          return true;
+        }
+        return false;
+      }
+    </script>
+
+    <h1>Animating elements</h1>
+    <style>
+      #block1 {
+        background-color: tomato;
+        width: 100px;
+        height: 100px;
+        position: absolute;
+      }
+    </style>
+    <button onclick="toTheRight()">Go right</button>
+    <div id="block1"></div>
+    <script>
+      function toTheRight() {
+        let b = document.getElementById("block1");
+        let x = 0;
+        setInterval(function () {
+          if (x === 600) {
+            clearInterval();
+          } else {
+            x++;
+            b.style.left = x + "px";
+          }
+        }, 2);
+      }
+    </script>
+    <style>
+      #block2 {
+        background-color: purple;
+        width: 100px;
+        height: 100px;
+        position: absolute;
+      }
+      .df {
+        margin-top: 120px;
+      }
+    </style>
+    <div class="df">
+      <strong>Practice exercise 11.11</strong>
+      <div id="block2"></div>
+    </div>
+
+    <script>
+      const main3 = document.querySelector("#block2");
+      let mover = { speed: 10, dir: 1, pos: 0 };
+      main3.addEventListener("click", moveBlock);
+      function moveBlock() {
+        let x = 30;
+        setInterval(function () {
+          if (x < 1) {
+            clearInterval();
+          } else {
+            if (mover.pos > 800 || mover.pos < 0) {
+              mover.dir *= -1;
+            }
+            x--;
+            mover.pos += x * mover.dir;
+            main3.style.left = mover.pos + "px";
+            console.log(mover.pos);
+          }
+        }, 2);
+      }
+    </script>
+
+    <!-- Chapter projects -->
+    <style>
+      .box_proj {
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+      }
+      .container_proj {
+        margin-top: 200px;
+      }
+    </style>
+    <div class="container_proj">
+      <h1>Chapter projects</h1>
+      <h2>Build your own analytics</h2>
+      <div class="box_proj" id="box00">Box #1</div>
+      <div class="box_proj" id="box11">Box #2</div>
+      <div class="box_proj" id="box22">Box #3</div>
+      <div class="box_proj" id="box33">Box #4</div>
+    </div>
+    <script>
+      const counter = [];
+      const main_proj = document.querySelector(".container_proj");
+      main_proj.addEventListener("click", trackerr);
+      function trackerr(e) {
+        const el = e.target;
+        if (el.id) {
+          const temp = {};
+          temp.content = el.textContent;
+          temp.id = el.id;
+          temp.tagName = el.tagName;
+          temp.class = el.className;
+          console.dir(el);
+          counter.push(temp);
+          console.log(counter);
+        }
+      }
+    </script>
+    <style>
+      .stars ul {
+        list-style-type: none;
+        padding: 0;
+      }
+      .star {
+        font-size: 3em;
+        color: #2e2222;
+        display: inline-block;
+      }
+      .orange {
+        color: orange;
+      }
+      .output_proj {
+        background-color: #ddd;
+      }
+    </style>
+    <h2>Star rating system</h2>
+    <ul class="stars">
+      <li class="star">&#10029;</li>
+      <li class="star">&#10029;</li>
+      <li class="star">&#10029;</li>
+      <li class="star">&#10029;</li>
+      <li class="star">&#10029;</li>
+    </ul>
+    <div class="output_proj"></div>
+    <script>
+      const starsUL = document.querySelector(".stars");
+      const output_proj = document.querySelector(".output_proj");
+      const stars = document.querySelectorAll(".star");
+      stars.forEach((star, index) => {
+        star.starValue = index + 1;
+        star.addEventListener("click", starRate);
+      });
+      function starRate(e) {
+        output_proj.innerHTML = `You Rated this ${e.target.starValue} stars`;
+        stars.forEach((star, index) => {
+          if (index < e.target.starValue) {
+            star.classList.add("orange");
+          } else {
+            star.classList.remove("orange");
+          }
+        });
+      }
+    </script>
+    <!-- Mouse tracker -->
+    <style>
+      .holder {
+        display: inline-block;
+        width: 300px;
+        height: 300px;
+        border: 1px solid black;
+        padding: 10px;
+      }
+      .active {
+        background-color: red;
+      }
+    </style>
+    <h2>Mouse position tracker</h2>
+    <div class="holder">
+      <div id="output_proj2"></div>
+    </div>
+    <script>
+      const ele = document.querySelector(".holder");
+      ele.addEventListener("mouseover", (e) => {
+        e.target.classList.add("active");
+      });
+      ele.addEventListener("mouseout", (e) => {
+        e.target.classList.remove("active");
+      });
+      ele.addEventListener("mousemove", coordin);
+      function coordin() {
+        let html = "X:" + event.clientX + " | Y:" + event.clientY;
+        document.getElementById("output_proj2").innerHTML = html;
+      }
+    </script>
+    <!-- Box clicker speed test game -->
+    <style>
+      .output_proj4 {
+        width: 500px;
+        height: 500px;
+        border: 1px solid black;
+        margin: auto;
+        text-align: center;
+      }
+      .box_proj4 {
+        width: 50px;
+        height: 50px;
+        position: relative;
+        top: 50px;
+        left: 20%;
+        background-color: red;
+      }
+      .message_proj4 {
+        text-align: center;
+        padding: 10px;
+        font-size: 1.3em;
+      }
+    </style>
+    <h2>Box clicker speed test game</h2>
+    <div class="output_proj4"></div>
+    <div class="message_proj4"></div>
+    <script>
+      const output_proj4 = document.querySelector(".output_proj4");
+      const message_proj4 = document.querySelector(".message_proj4");
+      message_proj4.textContent = "Press to Start";
+      const box_proj4 = document.createElement("div");
+      const game = {
+        timer: 0,
+        start: null,
+      };
+      box_proj4.classList.add("box_proj4");
+      output_proj4.append(box_proj4);
+      box_proj4.addEventListener("click", (e) => {
+        box_proj4.textContent = "";
+        box_proj4.style.display = "none";
+        game.timer = setTimeout(addBox_p, ranNum(3000));
+        if (!game.start) {
+          message_proj4.textContent = "Loading....";
+        } else {
+          const cur = new Date().getTime();
+          const dur = (cur - game.start) / 1000;
+          message_proj4.textContent = `It took ${dur} seconds to click`;
+        }
+      });
+      function addBox_p() {
+        message_proj4.textContent = "Click it...";
+        game.start = new Date().getTime();
+        box_proj4.style.display = "block";
+        box_proj4.style.left = ranNum(450) + "px";
+        box_proj4.style.top = ranNum(450) + "px";
+      }
+      function ranNum(max) {
+        return Math.floor(Math.random() * max);
+      }
+    </script>
+  </body>
 </html>
