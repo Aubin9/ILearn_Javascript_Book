@@ -160,3 +160,14 @@ results to the console.
 -Drag and drop elements
 -Form submission: <form action="anotherpage.html" method="get" onsubmit="doStuff()">
 -Animating elements
+
+## 12. Intermediate JavaScript (index12.html)
+
+-Regular expressions (regex): used when you wanna look for error in a large file or retrieve the browser agent a user is using; also can be used for form validation
+-Functions and the arguments object
+-JavaScript hoisting
+-Strict mode: always use this "use strict" at the beginning of your js file
+-Debugging
+-Using cookies
+-Local storage
+-JSON: JavaScript Object Notation
